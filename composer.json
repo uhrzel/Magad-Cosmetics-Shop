@@ -1,0 +1,11 @@
+{
+  "name": "myvendor/store",
+  "description": "A short description of my project",
+  "require": {
+    "php": "^8.0.2",
+    "intervention/image": "^2.7",
+    "dompdf/dompdf": "^3.0",
+    "setasign/fpdi-tcpdf": "^2.3",
+    "phpmailer/phpmailer": "^6.9"
+  }
+}
