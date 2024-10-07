@@ -136,14 +136,15 @@
                 <i class="fas fa-user"></i>
                 <a href="http://localhost/cosmetics-shop/staff/login.php">Staff</a>
             </div>
+            <div id="box">
+                <i class="fas fa-user-shield"></i>
+                <a href="http://localhost/cosmetics-shop/admin/login.php">Admin</a>
+            </div>
 
         </div>
     </div>
 
-    <div id="admin-box">
-        <i class="fas fa-user-shield"></i>
-        <a href="http://localhost/cosmetics-shop/admin/login.php">Admin</a>
-    </div>
+
 
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>

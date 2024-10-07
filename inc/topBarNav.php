@@ -45,10 +45,26 @@
           <a href="./?p=my_account" class="text-dark  nav-link text-white"><b> Hi, <?php echo $_settings->userdata('firstname') ?>!</b></a>
           <a href="logout.php" class="text-dark  nav-link text-white"><i class="fa fa-sign-out-alt"></i></a>
         <?php else: ?>
-          <button class="btn btn-outline-dark ml-2" id="login-btn" type="button">Login</button>
-        <?php endif; ?>
-        <a class="btn btn-outline-dark ml-2" href="http://localhost/cosmetics-shop/home2.php">Accounts</a>
+          <button class="btn btn-outline-pink ml-2" id="login-btn" type="button">Login</button>
+          <div class="dropdown">
+            <button class="btn btn-outline-pink dropdown-toggle ml-2" type="button" id="accountsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Accounts
+            </button>
+            <div class="dropdown-menu" aria-labelledby="accountsDropdown">
 
+              <a class="dropdown-item" href="http://localhost/cosmetics-shop/superadmin/login.php">
+                <i class="fas fa-user-shield"></i> Superadmin
+              </a>
+              <a class="dropdown-item" href="http://localhost/cosmetics-shop/staff/login.php">
+                <i class="fas fa-users-cog"></i> Staff
+              </a>
+              <a class="dropdown-item" href="http://localhost/cosmetics-shop/admin/login.php">
+                <i class="fas fa-user-tie"></i> Admin
+              </a>
+            </div>
+          </div>
+
+        <?php endif; ?>
       </div>
     </div>
   </div>
