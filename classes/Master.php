@@ -1625,6 +1625,63 @@ class Master extends DBConnection
 			return json_encode(['status' => 'failed', 'msg' => "Email could not be sent. Please check the error log."]);
 		}
 	}
+	public function send_message()
+	{
+		// Ensure the method only runs on POST requests
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			// Get the database connection
+			global $conn;
+
+			// Sanitize and retrieve input values
+			$message = isset($_POST['message']) ? trim($_POST['message']) : '';
+			$receiver_id = isset($_POST['receiver_id']) ? (int)$_POST['receiver_id'] : 0;
+
+			// Check if the inputs are valid
+			if (empty($message) || empty($receiver_id)) {
+				return json_encode(['status' => 'error', 'message' => 'Message and receiver are required.']);
+			}
+
+			// Retrieve the sender ID from session
+			$sender_id = isset($_SESSION['userdata']['id']) ? $_SESSION['userdata']['id'] : 0;
+
+			// Prepare the SQL statement
+			$stmt = $conn->prepare("INSERT INTO messages (sender_id, client_id, message, date_created) VALUES (?, ?, ?, NOW())");
+			$stmt->bind_param("iis", $sender_id, $receiver_id, $message);
+
+			// Execute the statement and check for success
+			if ($stmt->execute()) {
+				// Message sent successfully
+				return json_encode(['status' => 'success', 'message' => 'Message sent successfully!']);
+			} else {
+				// Error inserting the message
+				return json_encode(['status' => 'error', 'message' => 'Failed to send message.']);
+			}
+		} else {
+			return json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
+		}
+	}
+	public function reply_message()
+	{
+		if (isset($_POST['reply_message']) && isset($_POST['message_id'])) {
+			$reply_message = $_POST['reply_message'];
+			$message_id = $_POST['message_id'];
+			$user_id = $_SESSION['userdata']['id'];
+
+			// Insert reply into database (assuming you have a replies table)
+			$sql = "INSERT INTO replies (message_id, sender_id, reply_message) VALUES ('$message_id', '$user_id', '$reply_message')";
+			$result = $this->conn->query($sql);
+
+			if ($result) {
+				$_SESSION['success'] = "Reply sent successfully.";
+				echo json_encode(['status' => 'success']);
+				exit;
+			} else {
+				$_SESSION['error'] = "Failed to send reply.";
+				echo json_encode(['status' => 'error']);
+				exit;
+			}
+		}
+	}
 }
 
 $Master = new Master();
@@ -1744,6 +1801,12 @@ switch ($action) {
 		break;
 	case 'bpi_register':
 		echo $Master->bpi_register();
+		break;
+	case 'send_message':
+		echo $Master->send_message();
+		break;
+	case 'reply_message':
+		echo $Master->reply_message();
 		break;
 	default:
 		// echo $sysset->index();

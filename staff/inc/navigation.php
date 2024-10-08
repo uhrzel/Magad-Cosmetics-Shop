@@ -55,6 +55,7 @@
                   </p>
                 </a>
               </li>
+
               <!--  <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>farmer/?page=clients" class="nav-link nav-clients">
                   <i class="nav-icon fas fa-users"></i>
@@ -71,6 +72,15 @@
                   </p>
                 </a>
               </li>
+              <li class="nav-item dropdown">
+                <a href="<?php echo base_url ?>staff/?page=messages" class="nav-link nav-messages">
+                  <i class="nav-icon fas fa-comments"></i>
+                  <p>
+                    Messages
+                  </p>
+                </a>
+              </li>
+
               <li class="nav-header">Maintenance</li>
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>staff/?page=maintenance/brand" class="nav-link nav-maintenance_brand">
