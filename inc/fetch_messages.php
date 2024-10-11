@@ -1,28 +1,33 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-include '../config.php'; // Ensure to include your database connection file
+error_reporting(0); // Disable error reporting for debugging
+include_once('../config.php');
 
-$client_id = $_settings->userdata('id');
+// Get the sender_id from the request, default to 0 if not set
+$sender_id = isset($_GET['sender_id']) ? intval($_GET['sender_id']) : 0;
 
-$query = "SELECT m.message, m.date_sent, u.firstname FROM messages m 
-          JOIN users u ON m.sender_id = u.id 
-          WHERE m.client_id = ? 
-          ORDER BY m.date_sent ASC";
+// Prepare the SQL query to fetch messages for the specific sender_id
+$sql = "
+    SELECT m.*, c.firstname, c.lastname 
+    FROM messages m 
+    JOIN clients c ON m.sender_id = c.id 
+    WHERE m.sender_id = $sender_id
+    ORDER BY m.date_sent DESC";
 
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $client_id);
-$stmt->execute();
-$result = $stmt->get_result();
+$result = $conn->query($sql);
 
 $messages = [];
-while ($row = $result->fetch_assoc()) {
-    $messages[] = [
-        'message' => $row['message'],
-        'date_sent' => $row['date_sent'],
-        'sender' => $row['firstname']
-    ];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $messages[] = [
+            'sender_id' => $row['sender_id'],
+            'firstname' => $row['firstname'], // Add first name
+            'lastname' => $row['lastname'],   // Add last name
+            'message' => $row['message'],
+            'date_sent' => date('c', strtotime($row['date_sent'])), // ISO 8601 format
+        ];
+    }
 }
 
-header('Content-Type: application/json'); // Set header to JSON
-echo json_encode($messages); // Output JSON data
+header('Content-Type: application/json'); // Set the content type header
+echo json_encode($messages);
+$conn->close();

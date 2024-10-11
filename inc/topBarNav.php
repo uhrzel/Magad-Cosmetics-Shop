@@ -71,9 +71,13 @@
   </div>
 </nav>
 
-<?php if ($_settings->userdata('id') > 0): ?> <!-- Check if user is logged in -->
-  <!-- Chat Section -->
-  <div class="chat-container" style="position: fixed; bottom: 0; right: 0; width: 300px; height: 400px; display: flex; flex-direction: column; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+<?php if ($_settings->userdata('id') > 0): ?>
+  <!-- Toggle Button -->
+  <button id="toggle-chat" class="toggle-chat-button">
+    Chat Support
+  </button>
+
+  <div class="chat-container" style="position: fixed; bottom: 0; right: 0; width: 300px; height: 400px; display: none; flex-direction: column; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
     <div class="chat-header" style="background-color: #ff6b6b; color: white; padding: 10px; border-top-left-radius: 8px; border-top-right-radius: 8px;">
       <strong>Chat Support</strong>
       <button id="close-chat" style="float: right; border: none; background: none; color: white;">&times;</button>
@@ -86,93 +90,225 @@
       <button id="send-message" style="border: none; background-color: #ff6b6b; color: white; padding: 5px 10px; border-radius: 4px; margin-left: 5px;">Send</button>
     </div>
   </div>
-<?php endif; ?> <!-- End of user login check -->
-
+<?php endif; ?>
 
 <style>
+  .toggle-chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff6b6b;
+    /* Main color */
+    color: white;
+    /* Text color */
+    border: none;
+    /* No border */
+    border-radius: 50px;
+    /* Rounded corners for a modern look */
+    padding: 12px 20px;
+    /* Vertical and horizontal padding */
+    font-size: 16px;
+    /* Font size */
+    font-weight: bold;
+    /* Bold text for emphasis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Soft shadow */
+    cursor: pointer;
+    /* Pointer cursor */
+    transition: background-color 0.3s, transform 0.2s;
+    /* Smooth transition */
+    z-index: 1000;
+    /* Ensure button is on top */
+  }
+
+  .toggle-chat-button:hover {
+    background-color: #ff4d4d;
+    /* Darker shade on hover */
+    transform: translateY(-2px);
+    /* Slight lift effect */
+  }
+
+  .toggle-chat-button:active {
+    transform: translateY(1px);
+    /* Slight dip effect when clicked */
+  }
+
   .chat-container {
     background-color: white;
     border-radius: 8px;
-    transition: all 0.3s ease;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    height: 400px;
+    display: none;
+    /* Start hidden */
+    flex-direction: column;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    /* Ensure it is on top of other content */
   }
 
   .chat-header {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     cursor: pointer;
   }
 
   .chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
     max-height: 300px;
-    /* Limit the height */
+  }
+
+  .chat-input {
+    display: flex;
+    padding: 10px;
   }
 
   .chat-input input {
-    width: 100%;
-    /* Make the input field take full width */
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
   }
 
   .chat-input button {
-    flex-shrink: 0;
-    /* Prevent button from shrinking */
+    background-color: #ff6b6b;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: none;
+    margin-left: 5px;
+  }
+
+  .message-container {
+    margin-bottom: 10px;
+  }
+
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .message-body {
+    background-color: #f1f1f1;
+    padding: 5px;
+    border-radius: 4px;
   }
 </style>
+
+<script>
+  // Wait for the DOM to load
+  document.addEventListener('DOMContentLoaded', function() {
+    const closeButton = document.getElementById('close-chat');
+    const chatContainer = document.querySelector('.chat-container');
+    const toggleButton = document.getElementById('toggle-chat');
+
+    // Function to show/hide chat container
+    function toggleChat() {
+      if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+        chatContainer.style.display = 'flex'; // Show the chat
+      } else {
+        chatContainer.style.display = 'none'; // Hide the chat
+      }
+    }
+
+    // Add event listener for the toggle button
+    toggleButton.addEventListener('click', toggleChat);
+
+    // Add event listener for the close button
+    closeButton.addEventListener('click', function() {
+      chatContainer.style.display = 'none'; // Hide the chat container
+    });
+  });
+</script>
+
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Show/hide the chat
-    const chatContainer = document.querySelector('.chat-container');
-    const closeChatButton = document.getElementById('close-chat');
-
-    closeChatButton.addEventListener('click', () => {
-      chatContainer.style.display = chatContainer.style.display === 'none' ? 'flex' : 'none';
-    });
-
-    // Fetch messages from the server
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch('http://localhost/cosmetics-shop/inc/fetch_messages.php');
-        const messages = await response.json();
-        const chatMessages = document.querySelector('.chat-messages');
-
-        chatMessages.innerHTML = ''; // Clear existing messages
-        messages.forEach(msg => {
-          const messageElement = document.createElement('div');
-          messageElement.innerHTML = `<strong>${msg.sender}:</strong> ${msg.message} <small>${new Date(msg.date_sent).toLocaleString()}</small>`;
-          chatMessages.appendChild(messageElement);
-        });
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      }
-    };
-
-    // Sending a message
     const sendMessageButton = document.getElementById('send-message');
     const messageInput = document.getElementById('message-input');
     const chatMessages = document.querySelector('.chat-messages');
 
-    sendMessageButton.addEventListener('click', () => {
+    sendMessageButton.addEventListener('click', async () => {
       const message = messageInput.value.trim();
       if (message) {
-        // Here you would normally send the message to the server
-        // For now, we just append it to the chat
-        const messageElement = document.createElement('div');
-        messageElement.textContent = message;
-        chatMessages.appendChild(messageElement);
-        messageInput.value = ''; // Clear the input
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        try {
+          const response = await fetch('http://localhost/cosmetics-shop/inc/send_message.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              sender: "<?php echo $_settings->userdata('id') ?>", // User sending the message
+              message: message
+            })
+          });
+
+          const result = await response.json();
+          if (result.success) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message-container');
+            messageElement.innerHTML = `
+    <div class="message-header">
+      <strong>${message.sender_id == "<?php echo $_settings->userdata('id') ?>" ? 'You' : 'User'}</strong>
+      <small class="message-date">${new Date(message.date_sent).toLocaleString()}</small>
+    </div>
+    <div class="message-body">${message.message}</div>
+  `;
+            chatMessages.appendChild(messageElement);
+            messageInput.value = ''; // Clear the input
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+          } else {
+            alert('Message failed to send');
+          }
+        } catch (error) {
+          console.error('Error sending message:', error);
+        }
       }
     });
+    async function fetchMessages() {
+      const senderId = "<?php echo $_settings->userdata('id') ?>";
 
-    // Optional: Allow pressing Enter to send message
-    messageInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        sendMessageButton.click();
+      if (senderId > 0) { // Check if the senderId is valid
+        try {
+          const response = await fetch(`http://localhost/cosmetics-shop/inc/fetch_messages.php?sender_id=${senderId}`);
+          const messages = await response.json();
+          console.log('Fetched messages:', messages); // Debugging output
+          chatMessages.innerHTML = ''; // Clear the current messages
+
+          messages.forEach(message => {
+            console.log('Date Sent:', message.date_sent); // Debugging
+            const parsedDate = new Date(message.date_sent);
+            console.log('Parsed Date:', parsedDate); // Debugging
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message-container');
+            messageElement.innerHTML = `
+          <div class="message-header">
+            <strong>${message.firstname} ${message.lastname}</strong> <!-- Display user name -->
+            <small class="message-date">${parsedDate.toLocaleDateString()} ${parsedDate.toLocaleTimeString()}</small>
+          </div>
+          <div class="message-body">${message.message}</div>
+        `;
+            chatMessages.appendChild(messageElement);
+          });
+          chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        } catch (error) {
+          console.error('Error fetching messages:', error);
+        }
+      } else {
+        console.warn('Invalid sender ID'); // Handle the case when senderId is not valid
       }
-    });
+    }
+    setInterval(fetchMessages); // Call it every 5 seconds
 
-    // Fetch messages when the page loads
-    fetchMessages();
+
+
   });
 </script>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:8111
--- Generation Time: Oct 07, 2024 at 02:49 PM
+-- Generation Time: Oct 08, 2024 at 12:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -156,6 +156,30 @@ INSERT INTO `inventory` (`id`, `variant`, `product_id`, `quantity`, `price`, `da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `date_sent` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `date_created` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `client_id`, `message`, `date_sent`, `status`, `date_created`) VALUES
+(3, 62, 3, '123', '2024-10-08 17:52:56', 1, '2024-10-08 17:52:56'),
+(4, 62, 2, 'hi bbgurl', '2024-10-08 18:17:02', 1, '2024-10-08 18:17:02');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -227,6 +251,31 @@ INSERT INTO `products` (`id`, `brand_id`, `category_id`, `name`, `specs`, `statu
 (36, 30, 20, 'passion fruit', '', 1, 1, '2024-09-20 01:49:37', 3),
 (37, 31, 21, 'Silka lotion', '&lt;p&gt;lotion spf 50&lt;/p&gt;', 1, 0, '2024-10-07 20:36:00', 2),
 (38, 32, 22, 'Avon Lipstick', 'Maroon&amp;nbsp;&lt;br&gt;Pink', 1, 0, '2024-10-07 20:42:25', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `replies`
+--
+
+CREATE TABLE `replies` (
+  `id` int(11) NOT NULL,
+  `message_id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `reply_message` text NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `replies`
+--
+
+INSERT INTO `replies` (`id`, `message_id`, `sender_id`, `reply_message`, `date_created`) VALUES
+(4, 3, 62, 'ok', '2024-10-08 09:52:59'),
+(5, 3, 62, 'ge', '2024-10-08 09:54:29'),
+(6, 4, 62, 'sa', '2024-10-08 10:30:41'),
+(7, 4, 62, 'ngek', '2024-10-08 10:34:15'),
+(8, 3, 62, 'kwek', '2024-10-08 10:38:54');
 
 -- --------------------------------------------------------
 
@@ -345,6 +394,14 @@ ALTER TABLE `inventory`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sender_id` (`sender_id`),
+  ADD KEY `client_id` (`client_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -368,6 +425,14 @@ ALTER TABLE `products`
   ADD KEY `brand_id` (`brand_id`,`category_id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `replies`
+--
+ALTER TABLE `replies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `message_id` (`message_id`),
+  ADD KEY `sender_id` (`sender_id`);
 
 --
 -- Indexes for table `sales`
@@ -424,6 +489,12 @@ ALTER TABLE `inventory`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
@@ -440,6 +511,12 @@ ALTER TABLE `order_list`
 --
 ALTER TABLE `products`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `replies`
+--
+ALTER TABLE `replies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -483,6 +560,13 @@ ALTER TABLE `categories`
   ADD CONSTRAINT `user_id_categories` FOREIGN KEY (`user_id_categories`) REFERENCES `users` (`id`);
 
 --
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
@@ -503,6 +587,13 @@ ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `replies`
+--
+ALTER TABLE `replies`
+  ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`message_id`) REFERENCES `messages` (`id`),
+  ADD CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `sales`
