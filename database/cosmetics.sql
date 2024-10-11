@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:8111
--- Generation Time: Oct 08, 2024 at 12:40 PM
+-- Generation Time: Oct 11, 2024 at 04:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -125,9 +125,7 @@ CREATE TABLE `clients` (
 INSERT INTO `clients` (`id`, `firstname`, `lastname`, `gender`, `contact`, `email`, `password`, `default_delivery_address`, `status`, `delete_flag`, `date_created`) VALUES
 (2, 'Samantha Jane', 'Miller', 'Female', '09123456789', 'sam23@sample.com', '91ec1f9324753048c0096d036a694f86', 'Sample Address', 1, 0, '2022-02-17 14:24:00'),
 (3, 'Arzel John', 'Zolina', 'Male', '09090937257', 'arzeljrz17@gmail.com', '91ec1f9324753048c0096d036a694f86', 'PMCO Village', 1, 0, '2024-05-17 11:22:55'),
-(4, 'Reynald', 'Agustin', 'Male', '09090937257', 'ajmixrhyme@gmail.com', '91ec1f9324753048c0096d036a694f86', 'Davao City Diversion Rd', 1, 0, '2024-09-14 15:57:32'),
-(5, 'test', 'test', 'Male', '09154138624', 'test@gmail.com', '202cb962ac59075b964b07152d234b70', 'sekret', 1, 0, '2024-09-18 15:54:44'),
-(9, 'Reynald', 'Agustin', 'Male', '02919281972187', 'cypheruhrzel@gmail.com', '202cb962ac59075b964b07152d234b70', 'Davao City Diversion Rd', 1, 0, '2024-09-26 15:22:35');
+(5, 'test', 'test', 'Male', '09154138624', 'test@gmail.com', '202cb962ac59075b964b07152d234b70', 'sekret', 1, 0, '2024-09-18 15:54:44');
 
 -- --------------------------------------------------------
 
@@ -162,20 +160,25 @@ INSERT INTO `inventory` (`id`, `variant`, `product_id`, `quantity`, `price`, `da
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
-  `client_id` int(11) NOT NULL,
-  `message` text NOT NULL,
-  `date_sent` datetime NOT NULL DEFAULT current_timestamp(),
-  `status` tinyint(1) NOT NULL DEFAULT 1,
-  `date_created` datetime DEFAULT current_timestamp()
+  `message` varchar(255) NOT NULL,
+  `date_sent` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`id`, `sender_id`, `client_id`, `message`, `date_sent`, `status`, `date_created`) VALUES
-(3, 62, 3, '123', '2024-10-08 17:52:56', 1, '2024-10-08 17:52:56'),
-(4, 62, 2, 'hi bbgurl', '2024-10-08 18:17:02', 1, '2024-10-08 18:17:02');
+INSERT INTO `messages` (`id`, `sender_id`, `message`, `date_sent`) VALUES
+(33, 2, 's', '2024-10-11 19:14:47'),
+(34, 2, 'hiiiiiiiiiii', '2024-10-11 19:16:08'),
+(35, 3, 'ok', '2024-10-11 19:17:38'),
+(36, 3, 's', '2024-10-11 19:22:44'),
+(37, 2, 'sa', '2024-10-11 19:27:56'),
+(42, 5, 'hi too', '2024-10-11 22:10:50'),
+(43, 5, 'eyo', '2024-10-11 22:17:14'),
+(44, 5, 'eyy', '2024-10-11 22:41:58'),
+(45, 5, 'hi', '2024-10-11 22:55:45'),
+(46, 5, 'oy', '2024-10-11 22:57:54');
 
 -- --------------------------------------------------------
 
@@ -203,7 +206,6 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `product_id`, `ref_code`, `client_id`, `delivery_address`, `payment_method`, `order_type`, `amount`, `status`, `paid`, `date_created`, `date_updated`) VALUES
-(60, 34, '20240900001', 4, 'Davao City Diversion Rd', 'Online Payment', 0, 10, 0, 1, '2024-09-18 16:14:17', '2024-09-20 00:39:55'),
 (61, 35, '20240900002', 2, 'Sample Address', 'cod', 0, 50, 3, 0, '2024-09-18 16:24:42', '2024-09-20 00:39:59'),
 (63, 35, '20240900004', 2, 'Sample Address', 'cod', 0, 50, 0, 1, '2024-09-18 16:25:19', '2024-09-20 00:40:03'),
 (64, 35, '20240900005', 5, 'sekret', 'cod', 0, 50, 3, 1, '2024-09-20 00:43:19', '2024-09-20 00:45:07');
@@ -260,22 +262,28 @@ INSERT INTO `products` (`id`, `brand_id`, `category_id`, `name`, `specs`, `statu
 
 CREATE TABLE `replies` (
   `id` int(11) NOT NULL,
-  `message_id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
-  `reply_message` text NOT NULL,
-  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
+  `reply_message` varchar(255) NOT NULL,
+  `date_sent` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `replies`
 --
 
-INSERT INTO `replies` (`id`, `message_id`, `sender_id`, `reply_message`, `date_created`) VALUES
-(4, 3, 62, 'ok', '2024-10-08 09:52:59'),
-(5, 3, 62, 'ge', '2024-10-08 09:54:29'),
-(6, 4, 62, 'sa', '2024-10-08 10:30:41'),
-(7, 4, 62, 'ngek', '2024-10-08 10:34:15'),
-(8, 3, 62, 'kwek', '2024-10-08 10:38:54');
+INSERT INTO `replies` (`id`, `sender_id`, `reply_message`, `date_sent`) VALUES
+(19, 2, 'was', '2024-10-11 22:06:30'),
+(24, 5, 'sa', '2024-10-11 22:16:10'),
+(25, 5, 'yooo', '2024-10-11 22:17:29'),
+(26, 3, 'babe', '2024-10-11 22:18:09'),
+(27, 5, 'sa', '2024-10-11 22:29:10'),
+(28, 5, 'yo', '2024-10-11 22:40:24'),
+(29, 3, 'oh', '2024-10-11 22:43:35'),
+(30, 2, 'ey', '2024-10-11 22:44:26'),
+(31, 3, 'ugh', '2024-10-11 22:44:45'),
+(32, 5, 'ugh', '2024-10-11 22:44:55'),
+(33, 2, 'ugh', '2024-10-11 22:44:58'),
+(34, 5, 'ugh', '2024-10-11 22:58:35');
 
 -- --------------------------------------------------------
 
@@ -296,7 +304,6 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `order_id`, `clients_id`, `total_amount`, `date_created`) VALUES
-(32, 60, 5, 10, '2024-09-18 16:14:17'),
 (34, 63, 5, 50, '2024-09-18 16:25:19'),
 (35, 64, 5, 50, '2024-09-20 00:43:19');
 
@@ -352,7 +359,8 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `password`, `ava
 (1, 'Admin', 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'uploads/avatars/1.png?v=1645064505', NULL, 1, '2021-01-20 14:02:37', '2024-10-07 20:19:20', NULL, NULL),
 (2, 'superadmin1', 'superadmin1', 'superadmin1', '2c7b0576873ffcbb4ca61c5a225b94e7', 'uploads/avatars/2.png?v=1726475276', NULL, 2, '2021-01-20 14:02:37', '2024-10-07 18:33:09', 'kablon@gmail.com', '09090937257'),
 (3, 'superadmin2', 'superadmin2', 'superadmin2', '2a43bf7ab34cd6bf5401343115eaf325', 'uploads/avatars/3.png?v=1726475208', NULL, 2, '2024-09-16 16:26:29', '2024-10-07 18:33:23', NULL, NULL),
-(62, 'Staff', 'Staff', 'staff', '1253208465b1efa876f982d8a9e73eef', 'uploads/avatars/62.png?v=1728305143', NULL, 3, '2024-10-07 19:29:34', '2024-10-07 20:49:05', 'arzeljrz17@gmail.com', '09154138624');
+(62, 'Staff', 'Staff', 'staff', '1253208465b1efa876f982d8a9e73eef', 'uploads/avatars/62.png?v=1728305143', NULL, 3, '2024-10-07 19:29:34', '2024-10-07 20:49:05', 'arzeljrz17@gmail.com', '09154138624'),
+(63, 'staff1', 'staff2', 'staff2', '202cb962ac59075b964b07152d234b70', NULL, NULL, 3, '2024-10-10 21:50:58', NULL, 'staff@gmail.com', '12');
 
 --
 -- Indexes for dumped tables
@@ -398,8 +406,7 @@ ALTER TABLE `inventory`
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sender_id` (`sender_id`),
-  ADD KEY `client_id` (`client_id`);
+  ADD KEY `sender_id` (`sender_id`);
 
 --
 -- Indexes for table `orders`
@@ -431,8 +438,7 @@ ALTER TABLE `products`
 --
 ALTER TABLE `replies`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `message_id` (`message_id`),
-  ADD KEY `sender_id` (`sender_id`);
+  ADD KEY `replies_ibfk_2` (`sender_id`);
 
 --
 -- Indexes for table `sales`
@@ -492,7 +498,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -516,7 +522,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `replies`
 --
 ALTER TABLE `replies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -534,7 +540,7 @@ ALTER TABLE `system_info`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- Constraints for dumped tables
@@ -563,8 +569,7 @@ ALTER TABLE `categories`
 -- Constraints for table `messages`
 --
 ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `sender_id` FOREIGN KEY (`sender_id`) REFERENCES `clients` (`id`);
 
 --
 -- Constraints for table `orders`
@@ -592,8 +597,7 @@ ALTER TABLE `products`
 -- Constraints for table `replies`
 --
 ALTER TABLE `replies`
-  ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`message_id`) REFERENCES `messages` (`id`),
-  ADD CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `sales`

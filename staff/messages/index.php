@@ -11,8 +11,26 @@ function get_users_with_messages($conn)
 	return $conn->query($query);
 }
 
+// Function to retrieve messages for a specific user
+function get_messages_for_user($conn, $user_id)
+{
+	$query = "
+        SELECT m.message, m.created_at, c.firstname, c.lastname 
+        FROM messages m 
+        JOIN clients c ON m.sender_id = c.id 
+        WHERE m.sender_id = ? 
+        ORDER BY m.created_at ASC
+    ";
+
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param("i", $user_id);
+	$stmt->execute();
+	return $stmt->get_result();
+}
+
 // Retrieve user_id from session
 $user_id = isset($_SESSION['userdata']['id']) ? $_SESSION['userdata']['id'] : null;
+$username = isset($_SESSION['userdata']['username']) ? $_SESSION['userdata']['username'] : null;
 
 // Check for flash messages
 if ($_settings->chk_flashdata('success')): ?>
@@ -25,11 +43,6 @@ if ($_settings->chk_flashdata('success')): ?>
 		alert_toast("<?php echo $_settings->flashdata('error') ?>", 'error');
 	</script>
 <?php endif; ?>
-
-<!-- Main Sidebar -->
-<div class="main-sidebar">
-	<!-- Your existing sidebar layout here -->
-</div>
 
 <!-- Secondary Sidebar for users with messages -->
 <div class="second-sidebar">
@@ -71,7 +84,6 @@ if ($_settings->chk_flashdata('success')): ?>
 	</div>
 </div>
 
-
 <!-- Include Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -110,39 +122,67 @@ if ($_settings->chk_flashdata('success')): ?>
 		color: #333;
 		padding: 8px 10px;
 		display: flex;
-		/* Use flexbox for better alignment */
 		align-items: center;
-		/* Center align items vertically */
 		border-radius: 5px;
 		transition: background 0.3s, transform 0.2s;
-		/* Added transform for hover effect */
 	}
 
 	.second-sidebar ul li a:hover {
 		background: #ddd;
 		transform: scale(1.02);
-		/* Slightly scale up on hover */
 	}
 
 	.second-sidebar ul li a i {
 		margin-right: 8px;
-		/* Spacing between icon and text */
 		color: #007bff;
-		/* Icon color */
 	}
 
 	.second-sidebar ul li a span {
 		margin-left: auto;
-		/* Align message count to the right */
 		color: #666;
-		/* Color for message count */
 		font-size: 0.9em;
-		/* Slightly smaller font for message count */
 	}
 
 	.chat-container {
 		display: flex;
 		flex-direction: column;
+	}
+
+	/* General styling for chat messages */
+	.chat-messages {
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+		padding: 10px;
+		max-height: 400px;
+	}
+
+	.message-container {
+		margin-bottom: 10px;
+		padding: 10px;
+		border-radius: 10px;
+		max-width: 60%;
+	}
+
+	/* Customer message styling - aligned to the left */
+	.customer-message {
+		background-color: #f1f1f1;
+		align-self: flex-start;
+		/* Align messages to the left */
+		border-top-left-radius: 0;
+	}
+
+	/* Staff message styling - aligned to the right */
+	.staff-message {
+		background-color: #d1e7ff;
+		align-self: flex-end;
+		/* Align messages to the right */
+		border-top-right-radius: 0;
+	}
+
+	/* Styling for message content */
+	.message-content {
+		word-wrap: break-word;
 	}
 </style>
 
@@ -169,24 +209,99 @@ if ($_settings->chk_flashdata('success')): ?>
 				// Show chat container
 				chatContainer.style.display = "flex";
 				chatMessages.innerHTML = ''; // Clear previous messages
+
+				// Fetch messages for the selected user
+				fetchMessages(userId);
+				sendMessageButton.setAttribute('data-user-id', userId);
 			});
 		});
 
-		// Close chat
+		function fetchMessages(userId) {
+			const xhrMessages = new XMLHttpRequest();
+			const xhrReplies = new XMLHttpRequest();
+			const chatMessages = document.getElementById('chat-messages');
+
+			// Fetch customer messages
+			xhrMessages.open("GET", "http://localhost/cosmetics-shop/staff/messages/fetch_messages.php?sender_id=" + userId, true);
+			xhrMessages.onload = function() {
+				if (xhrMessages.status === 200) {
+					const messages = JSON.parse(xhrMessages.responseText);
+					messages.forEach(msg => {
+						const messageElement = document.createElement("div");
+						messageElement.className = 'message-container customer-message';
+						messageElement.innerHTML = `
+                    <div class="message-content">
+                        <strong>${msg.firstname} ${msg.lastname}</strong>: ${msg.message}
+                    </div>
+                `;
+						chatMessages.appendChild(messageElement);
+					});
+					chatMessages.scrollTop = chatMessages.scrollHeight;
+				}
+			};
+			xhrMessages.send();
+
+			// Fetch staff replies
+			xhrReplies.open("GET", "http://localhost/cosmetics-shop/staff/messages/fetch_replies.php?sender_id=" + userId, true);
+			xhrReplies.onload = function() {
+				if (xhrReplies.status === 200) {
+					const replies = JSON.parse(xhrReplies.responseText);
+					replies.forEach(reply => {
+						const replyElement = document.createElement("div");
+						replyElement.className = 'message-container staff-message';
+						replyElement.innerHTML = `
+                    <div class="message-content">
+                        <strong>${reply.username}</strong>: ${reply.message}
+                    </div>
+                `;
+						chatMessages.appendChild(replyElement);
+					});
+					chatMessages.scrollTop = chatMessages.scrollHeight;
+				} else {
+					console.error('Error fetching replies:', xhrReplies.statusText);
+				}
+			};
+			xhrReplies.send();
+		}
+
+
 		closeChatButton.addEventListener('click', function() {
 			chatContainer.style.display = "none";
 		});
-
-		// Send message
 		sendMessageButton.addEventListener('click', function() {
 			const message = messageInput.value.trim();
-			if (message) {
-				const messageElement = document.createElement("div");
-				messageElement.textContent = message;
-				chatMessages.appendChild(messageElement);
-				messageInput.value = ''; // Clear input after sending
-				chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the bottom
+			const userId = this.getAttribute('data-user-id'); // Ensure user ID is fetched
+
+			console.log('Message:', message); // Debug log for message
+			console.log('User ID:', userId); // Debug log for user ID
+
+			if (message && userId) { // Check message and user ID
+				// Clear the input after sending
+				messageInput.value = '';
+
+				// Send the message to the server
+				const xhr = new XMLHttpRequest();
+				xhr.open("POST", "http://localhost/cosmetics-shop/staff/messages/send_message.php", true); // Adjust the URL as needed
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.onload = function() {
+					if (xhr.status !== 200) {
+						console.error('Error sending message:', xhr.statusText);
+					} else {
+						// Optionally, you can handle the response here
+						console.log('Response:', xhr.responseText); // Log server response
+						// After sending the message, fetch replies to update the chat
+						fetchMessages(userId); // Call the function to fetch replies/messages
+					}
+				};
+				// Send message data to the server
+				xhr.send(`sender_id=${userId}&reply_message=${encodeURIComponent(message)}`);
+			} else {
+				console.warn('Message is empty or user ID is not found.');
 			}
 		});
+
+
+
+
 	});
 </script>

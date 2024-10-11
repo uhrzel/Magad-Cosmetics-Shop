@@ -227,7 +227,58 @@
     });
   });
 </script>
+<style>
+  .chat-messages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;
+    max-height: 400px;
+  }
 
+  .message-container {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 60%;
+    word-wrap: break-word;
+    /* Prevent overflow */
+  }
+
+  /* Customer message styling */
+  .customer-message {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+    /* Align messages to the left */
+  }
+
+  /* Staff message styling */
+  .staff-message {
+    background-color: #d1e7ff;
+    align-self: flex-end;
+    /* Align messages to the right */
+  }
+
+  /* Styling for message header */
+  .message-header,
+  .reply-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .message-date,
+  .reply-date {
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Styling for message body */
+  .message-body,
+  .reply-body {
+    margin-top: 5px;
+    /* Add some space between header and body */
+  }
+</style>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
@@ -277,27 +328,49 @@
 
       if (senderId > 0) { // Check if the senderId is valid
         try {
-          const response = await fetch(`http://localhost/cosmetics-shop/inc/fetch_messages.php?sender_id=${senderId}`);
-          const messages = await response.json();
+          // Fetch both messages and replies
+          const messagesResponse = await fetch(`http://localhost/cosmetics-shop/inc/fetch_messages.php?sender_id=${senderId}`);
+          const repliesResponse = await fetch(`http://localhost/cosmetics-shop/inc/fetch_replies.php?sender_id=${senderId}`);
+
+          const messages = await messagesResponse.json();
+          const replies = await repliesResponse.json();
           console.log('Fetched messages:', messages); // Debugging output
+          console.log('Fetched replies:', replies); // Debugging output
+
           chatMessages.innerHTML = ''; // Clear the current messages
 
+          // Display customer messages
           messages.forEach(message => {
-            console.log('Date Sent:', message.date_sent); // Debugging
             const parsedDate = new Date(message.date_sent);
-            console.log('Parsed Date:', parsedDate); // Debugging
             const messageElement = document.createElement('div');
-            messageElement.classList.add('message-container');
+            messageElement.classList.add('message-container', 'customer-message'); // Add customer-message class
             messageElement.innerHTML = `
-          <div class="message-header">
-            <strong>${message.firstname} ${message.lastname}</strong> <!-- Display user name -->
-            <small class="message-date">${parsedDate.toLocaleDateString()} ${parsedDate.toLocaleTimeString()}</small>
-          </div>
-          <div class="message-body">${message.message}</div>
-        `;
+                    <div class="message-header">
+                        <strong>${message.firstname} ${message.lastname}</strong>
+                        <small class="message-date">${parsedDate.toLocaleDateString()} ${parsedDate.toLocaleTimeString()}</small>
+                    </div>
+                    <div class="message-body">${message.message}</div>
+                `;
             chatMessages.appendChild(messageElement);
           });
-          chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+
+          // Display staff replies
+          replies.forEach(reply => {
+            const parsedDate = new Date(reply.date_sent); // Assuming replies also have a date_sent field
+            const replyElement = document.createElement('div');
+            replyElement.classList.add('message-container', 'staff-message'); // Add staff-message class
+            replyElement.innerHTML = `
+                    <div class="reply-header">
+                        <strong>Chat Staff</strong> <!-- Assuming you have username in reply -->
+                        <small class="reply-date">${parsedDate.toLocaleDateString()} ${parsedDate.toLocaleTimeString()}</small>
+                    </div>
+                    <div class="reply-body">${reply.message}</div>
+                `;
+            chatMessages.appendChild(replyElement);
+          });
+
+
+
         } catch (error) {
           console.error('Error fetching messages:', error);
         }
@@ -305,9 +378,9 @@
         console.warn('Invalid sender ID'); // Handle the case when senderId is not valid
       }
     }
-    setInterval(fetchMessages); // Call it every 5 seconds
 
-
+    // Fetch messages every X milliseconds (e.g., every 5 seconds)
+    setInterval(fetchMessages);
 
   });
 </script>
