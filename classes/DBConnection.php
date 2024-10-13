@@ -17,7 +17,7 @@ class DBConnection
 
         if (!isset($this->conn)) {
 
-            $this->conn = new mysqli($this->host, $this->username, $this->password, $this->database, 8111);
+            $this->conn = new mysqli($this->host, $this->username, $this->password, $this->database);
 
             if (!$this->conn) {
                 echo 'Cannot connect to database server';

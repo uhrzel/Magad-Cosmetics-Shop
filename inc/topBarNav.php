@@ -7,7 +7,7 @@
       <img src="<?php echo validate_image($_settings->info('logo')) ?>" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
       <?php echo $_settings->info('short_name') ?>
     </a>
-
+    <!-- 
     <form class="form-inline" id="search-form">
       <div class="input-group">
         <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search" name="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : "" ?>" aria-describedby="button-addon2">
@@ -15,7 +15,7 @@
           <button class="btn btn-outline-light btn-sm m-0" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
         </div>
       </div>
-    </form>
+    </form> -->
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -34,18 +34,8 @@
       </ul>
       <div class="d-flex align-items-center">
         <?php if ($_settings->userdata('id') > 0 && $_settings->userdata('login_type') == 2): ?>
-          <a class="text-dark mr-2 nav-link text-white" href="./?p=cart">
-            <i class="bi-cart-fill me-1"></i>
-            Cart
-            <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart-count">
-              <?php
-              $count = $conn->query("SELECT SUM(quantity) as items from `cart` where client_id =" . $_settings->userdata('id'))->fetch_assoc()['items'];
-              echo ($count > 0 ? $count : 0);
-              ?>
-            </span>
-          </a>
 
-          <a href="./?p=my_account" class="text-dark nav-link text-white"><b> Hi, <?php echo $_settings->userdata('firstname') ?>!</b></a>
+          <a href="./?p=edit_account" class="text-dark nav-link text-white"><b> Hi, <?php echo $_settings->userdata('firstname') ?>!</b></a>
           <a href="logout.php" class="text-dark nav-link text-white"><i class="fa fa-sign-out-alt"></i></a>
         <?php else: ?>
           <button class="btn btn-outline-pink ml-2" id="login-btn" type="button">Login</button>
@@ -93,6 +83,11 @@
 <?php endif; ?>
 
 <style>
+  .form-inline {
+    flex-grow: 1;
+    max-width: 400px;
+  }
+
   .toggle-chat-button {
     position: fixed;
     bottom: 20px;

@@ -31,7 +31,7 @@
                   </p>
                 </a>
               </li>
-              <li class="nav-item dropdown">
+              <!--    <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=product" class="nav-link nav-product">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
@@ -46,15 +46,15 @@
                     Inventory List
                   </p>
                 </a>
-              </li>
-              <li class="nav-item dropdown">
+              </li> -->
+              <!--    <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=orders" class="nav-link nav-orders">
                   <i class="nav-icon fas fa-list"></i>
                   <p>
                     Order List
                   </p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=clients" class="nav-link nav-clients">
                   <i class="nav-icon fas fa-users"></i>
@@ -63,15 +63,15 @@
                   </p>
                 </a>
               </li>
-              <li class="nav-item dropdown">
+              <!--    <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=sales" class="nav-link nav-sales">
                   <i class="nav-icon fas fa-file"></i>
                   <p>
                     Sales Report
                   </p>
                 </a>
-              </li>
-              <li class="nav-header">Maintenance</li>
+              </li> -->
+              <!--     <li class="nav-header">Maintenance</li>
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=maintenance/brand" class="nav-link nav-maintenance_brand">
                   <i class="nav-icon fas fa-star"></i>
@@ -88,7 +88,7 @@
                   </p>
                 </a>
               </li>
-
+ -->
               <li class="nav-item dropdown">
                 <a href="<?php echo base_url ?>admin/?page=system_info" class="nav-link nav-system_info">
                   <i class="nav-icon fas fa-cogs"></i>

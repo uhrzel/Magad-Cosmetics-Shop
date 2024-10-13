@@ -44,6 +44,19 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
                 <input type="text" name="name" id="name" class="form-control rounded-0" required value="<?php echo isset($name) ? $name : '' ?>" />
             </div>
             <div class="form-group">
+                <label for="tiktok_link" class="control-label">Tiktok Link</label>
+                <input type="text" name="tiktok_link" id="tiktok_link" class="form-control rounded-0" value="<?php echo isset($tiktok_link) ? $tiktok_link : '' ?>" />
+            </div>
+            <div class="form-group">
+                <label for="shopee_link" class="control-label">Shopee Link</label>
+                <input type="text" name="shopee_link" id="shopee_link" class="form-control rounded-0" value="<?php echo isset($shopee_link) ? $shopee_link : '' ?>" />
+
+            </div>
+            <div class="form-group">
+                <label for="lazada_link" class="control-label">Lazada Link</label>
+                <input type="text" name="lazada_link" id="lazada_link" class="form-control rounded-0" value="<?php echo isset($lazada_link) ? $lazada_link : '' ?>" />
+            </div>
+            <div class="form-group">
                 <label for="specs" class="control-label">Specs</label>
                 <textarea name="specs" id="" cols="30" rows="2" class="form-control form no-resize summernote"><?php echo isset($specs) ? $specs : ''; ?></textarea>
             </div>

@@ -3,13 +3,13 @@
             <div class="card rounded-0">
                 <div class="card-body">
                     <div class="w-100 justify-content-between d-flex">
-                        <h4><b>Orders</b></h4>
+                        <!--       <h4><b>Orders</b></h4> -->
                         <a href="./?p=edit_account" class="btn btn btn-default btn-flat bg-maroon">
                             <div class="fa fa-user-cog"></div> Manage Account
                         </a>
                     </div>
-                    <hr class="border-warning">
-                    <table class="table table-stripped text-dark">
+                    <!--     <hr class="border-warning"> -->
+                    <!--   <table class="table table-stripped text-dark">
                         <colgroup>
                             <col width="10%">
                             <col width="15">
@@ -53,7 +53,7 @@
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
-                    </table>
+                    </table> -->
                 </div>
             </div>
         </div>

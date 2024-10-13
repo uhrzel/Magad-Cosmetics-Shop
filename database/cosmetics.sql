@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:8111
--- Generation Time: Oct 11, 2024 at 04:59 PM
+-- Generation Time: Oct 13, 2024 at 05:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,13 +43,11 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id`, `user_id_brand`, `name`, `description`, `image_path`, `status`, `delete_flag`, `date_created`) VALUES
-(23, 2, 'Farm Harvest Vegetables', 'Fresh harvest from the from vegtables', 'uploads/brands/23.jpg?v=1725941647', 1, 1, '2024-05-20 18:59:03'),
-(25, 3, 'Farm Harvest Fruits', 'Fresh from the farm fruits', 'uploads/brands/25.jpg?v=1726469390', 1, 1, '2024-09-16 14:49:50'),
-(28, 2, 'newdata', 'description', 'uploads/brands/28.PNG?v=1726637500', 1, 1, '2024-09-18 13:31:40'),
-(29, 2, 'vegetables', 'vegetables description', 'uploads/brands/29.jpg?v=1726638389', 1, 1, '2024-09-18 13:46:29'),
-(30, 3, 'fruits', 'fruits description', 'uploads/brands/30.jpeg?v=1726639663', 1, 1, '2024-09-18 14:07:43'),
-(31, 2, 'Silka', 'Silka Description', 'uploads/brands/31.png?v=1728304456', 1, 0, '2024-10-07 20:34:16'),
-(32, 2, 'Avon', '', 'uploads/brands/32.jpeg?v=1728304773', 1, 0, '2024-10-07 20:39:33');
+(35, 2, 'Magad Soap', 'soap description', 'uploads/brands/35.jpeg?v=1728829838', 1, 0, '2024-10-13 22:30:38'),
+(36, 2, 'Magad Feminine Wash', 'Magad Feminine Wash Description', 'uploads/brands/36.jpeg?v=1728830654', 1, 0, '2024-10-13 22:44:14'),
+(37, 2, 'Magad Personal Care', 'Magad Personal Care Description', 'uploads/brands/37.jpeg?v=1728830998', 1, 0, '2024-10-13 22:49:58'),
+(38, 2, 'Magad Whitening', 'Magad Whitening Description', 'uploads/brands/38.jpeg?v=1728831089', 1, 0, '2024-10-13 22:51:29'),
+(39, 2, 'Magad Skincare', 'Magad Skincare Description', 'uploads/brands/39.jpeg?v=1728831372', 1, 0, '2024-10-13 22:56:12');
 
 -- --------------------------------------------------------
 
@@ -87,16 +85,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `user_id_categories`, `category`, `description`, `status`, `delete_flag`, `date_created`) VALUES
-(1, 2, 'Melon Fruits', 'Melons are refreshing, juicy fruits known for their high water content and sweet flavors. Popular varieties include watermelons, cantaloupes, and honeydew. ', 1, 1, '2022-02-17 11:27:11'),
-(12, 2, 'Root Vegetables', 'Root vegetables are nutrient-dense plants that grow underground, absorbing essential minerals and vitamins from the soil.', 1, 1, '2024-05-20 18:55:57'),
-(15, 2, 'Leafy Vegetables', 'Leafy vegetables are nutrient-rich greens that are essential to a healthy diet. They are packed with vitamins, minerals, and antioxidants, supporting overall wellness. ', 1, 1, '2024-09-16 14:43:37'),
-(16, 2, 'Tropical Fruits', 'Tropical fruits are grown in warm, humid climates and are known for their vibrant flavors, juicy textures, and exotic appeal. Common tropical fruits include mangoes, pineapples, bananas, papayas, and coconuts. ', 1, 1, '2024-09-16 14:51:06'),
-(17, 3, 'test vegetabels', 'test description', 1, 1, '2024-09-18 13:37:35'),
-(18, 3, 'test vegetable', '', 1, 1, '2024-09-18 13:38:32'),
-(19, 2, 'Root Vegetable', 'root vegetables description', 1, 1, '2024-09-18 13:47:31'),
-(20, 3, 'Melon Fruit', 'melon description', 1, 1, '2024-09-18 14:08:18'),
-(21, 2, 'Skin Care', 'Skin Care Description', 1, 0, '2024-10-07 20:31:56'),
-(22, 2, 'Lipstick', 'Lipstick Description', 1, 0, '2024-10-07 20:38:16');
+(25, 2, 'Bath and Body Care', 'Bath and Body Care Description', 1, 0, '2024-10-13 22:27:14'),
+(26, 2, 'Feminine Care', 'Feminine Care', 1, 0, '2024-10-13 22:42:33'),
+(27, 2, 'Skin Care', 'Skin Care Description', 1, 0, '2024-10-13 22:47:02'),
+(28, 2, 'Personal Care', 'Personal Care Description', 1, 0, '2024-10-13 22:48:03'),
+(29, 2, 'Whitening', 'Whitening Description', 1, 0, '2024-10-13 22:51:07');
 
 -- --------------------------------------------------------
 
@@ -149,7 +142,13 @@ CREATE TABLE `inventory` (
 
 INSERT INTO `inventory` (`id`, `variant`, `product_id`, `quantity`, `price`, `date_created`, `date_updated`) VALUES
 (24, 'Lotion', 37, 10, 70, '2024-10-07 20:37:27', NULL),
-(25, 'Maroon', 38, 10, 110, '2024-10-07 20:42:43', NULL);
+(25, 'Maroon', 38, 10, 110, '2024-10-07 20:42:43', NULL),
+(26, '5', 39, 10, 120, '2024-10-13 20:52:06', NULL),
+(27, 'Tawas', 46, 251, 50, '2024-10-13 23:05:37', NULL),
+(28, 'Pink', 43, 40, 80, '2024-10-13 23:06:47', NULL),
+(29, 'Guava', 42, 2, 20, '2024-10-13 23:07:25', NULL),
+(30, 'White Lotion ', 44, 69, 80, '2024-10-13 23:08:04', NULL),
+(31, 'Sunflower', 45, 42, 70, '2024-10-13 23:08:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -201,15 +200,6 @@ CREATE TABLE `orders` (
   `date_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `product_id`, `ref_code`, `client_id`, `delivery_address`, `payment_method`, `order_type`, `amount`, `status`, `paid`, `date_created`, `date_updated`) VALUES
-(61, 35, '20240900002', 2, 'Sample Address', 'cod', 0, 50, 3, 0, '2024-09-18 16:24:42', '2024-09-20 00:39:59'),
-(63, 35, '20240900004', 2, 'Sample Address', 'cod', 0, 50, 0, 1, '2024-09-18 16:25:19', '2024-09-20 00:40:03'),
-(64, 35, '20240900005', 5, 'sekret', 'cod', 0, 50, 3, 1, '2024-09-20 00:43:19', '2024-09-20 00:45:07');
-
 -- --------------------------------------------------------
 
 --
@@ -237,6 +227,9 @@ CREATE TABLE `products` (
   `category_id` int(30) NOT NULL,
   `name` varchar(250) NOT NULL,
   `specs` text NOT NULL,
+  `tiktok_link` varchar(255) NOT NULL,
+  `shopee_link` varchar(255) NOT NULL,
+  `lazada_link` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `delete_flag` tinyint(1) NOT NULL DEFAULT 0,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
@@ -247,12 +240,12 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `brand_id`, `category_id`, `name`, `specs`, `status`, `delete_flag`, `date_created`, `user_id`) VALUES
-(34, 29, 19, 'Potatoe', '', 1, 1, '2024-09-18 14:06:11', 2),
-(35, 30, 20, 'Watermelon', '&lt;p&gt;melon fruit&lt;/p&gt;', 1, 1, '2024-09-18 14:09:14', 3),
-(36, 30, 20, 'passion fruit', '', 1, 1, '2024-09-20 01:49:37', 3),
-(37, 31, 21, 'Silka lotion', '&lt;p&gt;lotion spf 50&lt;/p&gt;', 1, 0, '2024-10-07 20:36:00', 2),
-(38, 32, 22, 'Avon Lipstick', 'Maroon&amp;nbsp;&lt;br&gt;Pink', 1, 0, '2024-10-07 20:42:25', 2);
+INSERT INTO `products` (`id`, `brand_id`, `category_id`, `name`, `specs`, `tiktok_link`, `shopee_link`, `lazada_link`, `status`, `delete_flag`, `date_created`, `user_id`) VALUES
+(42, 35, 25, 'GUAVA SOAP Antibacterial/Antimicrobial70g', '&lt;h2 class=&quot;WjNdTR&quot; style=&quot;background: rgba(0, 0, 0, 0.02); color: rgba(0, 0, 0, 0.87); font-size: 1.125rem; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0.875rem; text-transform: capitalize; font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;Product Description&lt;/h2&gt;&lt;div class=&quot;Gf4Ro0&quot; style=&quot;margin: 1.875rem 0.9375rem 0.9375rem; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;&lt;div class=&quot;e8lZp3&quot; style=&quot;font-size: 0.875rem; line-height: 1.7; overflow: hidden; text-overflow: ellipsis; white-space-collapse: preserve;&quot;&gt;&lt;p class=&quot;QN2lPu&quot; style=&quot;margin-right: 0px; margin-bottom: 0px; margin-left: 0px;&quot;&gt;GUAVA SOAP ✨\r\n\r\nIt is traditionally well known for its natural skin healing properties\r\nHeals skin bruises, cuts, and minor skin irritations\r\nWondering how it will help our skin\r\nGuava has been hailed as one of the super fruits because of its numerous health-promoting qualities\r\nIt is extraordinarily rich in vitamin C and also contains carotene and antioxidants that are beneficial for skin health.\r\n\r\n🔷 Contain anti-oxidants that detoxifies and keeps your skin glowing and free wrinkles\r\n🔷 Treat skin discoloration, such as dark circles, spider veins, rosacea and acne irritation\r\n🔷 Effective in removing blackheads that get formed near our nose, chin, and other areas\r\n🔷 Anti-allergic in nature and is very effective in providing relief and reduce itching\r\n🔷 Beneficial for improving the complexion of our skin and for making it beautiful and radiant again.\r\nIf you&rsquo;re looking for a natural and cleanser soap, check out our natural Guava soap in our resellers and distributors near your area.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;', 'https://vt.tiktok.com/ZS2wxSn3Q/', 'https://shopee.ph/GUAVA-SOAP-Antibacterial-Antimicrobial70g-i.922036405.22812460917?xptdk=aa895e8c-352a-468e-b18f-bc8b0d7c27d8', '', 1, 0, '2024-10-13 22:39:51', 2),
+(43, 36, 26, 'Feminine Wash', '&lt;h2 class=&quot;WjNdTR&quot; style=&quot;background: rgba(0, 0, 0, 0.02); color: rgba(0, 0, 0, 0.87); font-size: 1.125rem; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0.875rem; text-transform: capitalize; font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;Product Description&lt;/h2&gt;&lt;div class=&quot;Gf4Ro0&quot; style=&quot;margin: 1.875rem 0.9375rem 0.9375rem; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;&lt;div class=&quot;e8lZp3&quot; style=&quot;font-size: 0.875rem; line-height: 1.7; overflow: hidden; text-overflow: ellipsis; white-space-collapse: preserve;&quot;&gt;&lt;p class=&quot;QN2lPu&quot; style=&quot;margin-right: 0px; margin-bottom: 0px; margin-left: 0px;&quot;&gt;You can now try our feminine wash\r\nBe the CEO of your Brand\r\n✔️ Low Order Quantity\r\n✔️ Quality Products\r\n✔️ FDA Processing\r\n✔️ Packaging Design\r\n\r\nFeminine wash BENEFITS:\r\n&bull;	Feel Fresh &amp;amp; Clean all day.\r\n&bull;	All natural with Guava Extract.\r\n&bull;	Cooling Effect\r\n&bull;	Protects you from odor, itch and irritation\r\n\r\n✔️INQUIRE NOW!!&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;', 'https://vt.tiktok.com/ZS2w9b4dL/', 'https://shopee.ph/Feminine-Wash-Open-for-Rebranding-i.922036405.18171007570?sp_atk=8288d88b-4840-4b60-b8dd-c066184443f1&xptdk=8288d88b-4840-4b60-b8dd-c066184443f1', '', 1, 0, '2024-10-13 22:46:17', 2),
+(44, 38, 29, 'Insta white Lotion SPF 50', '&lt;h2 class=&quot;WjNdTR&quot; style=&quot;background: rgba(0, 0, 0, 0.02); color: rgba(0, 0, 0, 0.87); font-size: 1.125rem; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0.875rem; text-transform: capitalize; font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;Product Description&lt;/h2&gt;&lt;div class=&quot;Gf4Ro0&quot; style=&quot;margin: 1.875rem 0.9375rem 0.9375rem; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;&lt;div class=&quot;e8lZp3&quot; style=&quot;font-size: 0.875rem; line-height: 1.7; overflow: hidden; text-overflow: ellipsis; white-space-collapse: preserve;&quot;&gt;&lt;p class=&quot;QN2lPu&quot; style=&quot;margin-right: 0px; margin-bottom: 0px; margin-left: 0px;&quot;&gt;Customize your own skincare brand with us today, with your own formula, and own brand with an FDA Licensed Manufacturer. \r\nBe the CEO of your own Brand!\r\nWe can help you on your all inquiries\r\nStart your own skincare line with us. We offer FDA assistance so you can sell your products with confidence. \r\n\r\nWhitening Body Lotion SPF 50\r\n-Solution to moisture and protect your skin from sun&#039;s harmful rays.\r\n-Lotion is non greasy and fast absorbing for a clean feel.\r\n-Premium Actives.\r\n-Instawhite Effect\r\n-Effective within 7 days\r\n\r\n*Low Order Quantity\r\n*Quality Products\r\n* FDA Processing\r\n* Packaging Design\r\nINQUIRE NOW!!&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;', 'https://vt.tiktok.com/ZS2wxjN2n/', 'https://shopee.ph/Insta-white-Lotion-SPF-50-i.922036405.18971386620?sp_atk=a9455f78-2059-4ca1-b90d-c5efa1bf63cf&xptdk=a9455f78-2059-4ca1-b90d-c5efa1bf63cf', '', 1, 0, '2024-10-13 22:54:24', 2),
+(45, 39, 27, 'SUNFLOWER OIL 100%60ml', '&lt;h2 class=&quot;WjNdTR&quot; style=&quot;background: rgba(0, 0, 0, 0.02); color: rgba(0, 0, 0, 0.87); font-size: 1.125rem; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0.875rem; text-transform: capitalize; font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;Product Description&lt;/h2&gt;&lt;div class=&quot;Gf4Ro0&quot; style=&quot;margin: 1.875rem 0.9375rem 0.9375rem; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;&lt;div class=&quot;e8lZp3&quot; style=&quot;font-size: 0.875rem; line-height: 1.7; overflow: hidden; text-overflow: ellipsis; white-space-collapse: preserve;&quot;&gt;&lt;p class=&quot;QN2lPu&quot; style=&quot;margin-right: 0px; margin-bottom: 0px; margin-left: 0px;&quot;&gt;Sunflower oil is It&#039;s packed with essential fatty acids and vitamin E, so it feels moisturizing on the skin. It&#039;s perfect for dry areas because it&#039;s lightweight but it doesn&#039;t absorb too quickly.\r\nWhen it comes to skincare today, sunflower seed oil is a great source of vitamin E, rich in nutrients and antioxidants, and is effective for combatting skincare issues like acne, inflammation, general redness and irritation of the skin. Sunflower oil has emollient properties that help the skin retain its moisture.\r\n*for rebranding\r\n*Low Order Quantity\r\n*Quality Products\r\n* FDA Processing\r\n* Packaging Design&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;', 'https://vt.tiktok.com/ZS2wxNKoV/', 'https://shopee.ph/SUNFLOWER-OIL-100-60ml-i.922036405.19671447072?sp_atk=ec9e0dd7-425f-4ea1-b354-ab9c23c26952&xptdk=ec9e0dd7-425f-4ea1-b354-ab9c23c26952', '', 1, 0, '2024-10-13 22:58:08', 2),
+(46, 37, 28, 'B1T3 for 50.00 Tawas Niacinamide with baking Soda 70g', '&lt;h2 class=&quot;WjNdTR&quot; style=&quot;background: rgba(0, 0, 0, 0.02); color: rgba(0, 0, 0, 0.87); font-size: 1.125rem; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0.875rem; text-transform: capitalize; font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;Product Description&lt;/h2&gt;&lt;div class=&quot;Gf4Ro0&quot; style=&quot;margin: 1.875rem 0.9375rem 0.9375rem; color: rgba(0, 0, 0, 0.8); font-family: Roboto, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, 文泉驛正黑, &amp;quot;WenQuanYi Zen Hei&amp;quot;, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;儷黑 Pro&amp;quot;, &amp;quot;LiHei Pro&amp;quot;, &amp;quot;Heiti TC&amp;quot;, 微軟正黑體, &amp;quot;Microsoft JhengHei UI&amp;quot;, &amp;quot;Microsoft JhengHei&amp;quot;, sans-serif;&quot;&gt;&lt;div class=&quot;e8lZp3&quot; style=&quot;font-size: 0.875rem; line-height: 1.7; overflow: hidden; text-overflow: ellipsis; white-space-collapse: preserve;&quot;&gt;&lt;p class=&quot;QN2lPu&quot; style=&quot;margin-right: 0px; margin-bottom: 0px; margin-left: 0px;&quot;&gt;Tawas Soap Niacinamide with baking soda is enriched with Tawas and Coconut Oil that help control excessive body sweat and help fight odor causing bacteria. FACTS: Contains tawas crystals, which acts as an antiseptic and eliminates bacteria; has natural bleaching properties to help whiten the skin, remove freckles and blemishes, and heal sun damage\r\n\r\nPERFECT FOR: Oily skin; skin that&rsquo;s regularly exposed to heat and pollution; people who sweat a lot\r\n\r\nLather on wet skin. Leave on for one minute on your face and three minutes on your body. Rinse well.\r\n\r\nDirections\r\n\r\n1. Gently massage on wet body.\r\n\r\n2. Rinse thoroughly.\r\n\r\n3. Use daily as a regular body soap.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;', 'https://vt.tiktok.com/ZS2wxDCpP/', 'https://shopee.ph/B1T3-for-50.00-Tawas-Niacinamide-with-baking-Soda-70g-i.922036405.27806311355?sp_atk=da23d40c-604e-4cec-9a83-9f341c1fc7ec&xptdk=da23d40c-604e-4cec-9a83-9f341c1fc7ec', '', 1, 0, '2024-10-13 23:02:24', 2);
 
 -- --------------------------------------------------------
 
@@ -298,14 +291,6 @@ CREATE TABLE `sales` (
   `total_amount` double NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sales`
---
-
-INSERT INTO `sales` (`id`, `order_id`, `clients_id`, `total_amount`, `date_created`) VALUES
-(34, 63, 5, 50, '2024-09-18 16:25:19'),
-(35, 64, 5, 50, '2024-09-20 00:43:19');
 
 -- --------------------------------------------------------
 
@@ -357,10 +342,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `password`, `avatar`, `last_login`, `type`, `date_added`, `date_updated`, `email_address`, `mobile_number`) VALUES
 (1, 'Admin', 'Admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'uploads/avatars/1.png?v=1645064505', NULL, 1, '2021-01-20 14:02:37', '2024-10-07 20:19:20', NULL, NULL),
-(2, 'superadmin1', 'superadmin1', 'superadmin1', '2c7b0576873ffcbb4ca61c5a225b94e7', 'uploads/avatars/2.png?v=1726475276', NULL, 2, '2021-01-20 14:02:37', '2024-10-07 18:33:09', 'kablon@gmail.com', '09090937257'),
-(3, 'superadmin2', 'superadmin2', 'superadmin2', '2a43bf7ab34cd6bf5401343115eaf325', 'uploads/avatars/3.png?v=1726475208', NULL, 2, '2024-09-16 16:26:29', '2024-10-07 18:33:23', NULL, NULL),
+(2, 'John', 'Doe', 'superadmin1', '2c7b0576873ffcbb4ca61c5a225b94e7', 'uploads/avatars/2.png?v=1726475276', NULL, 2, '2021-01-20 14:02:37', '2024-10-13 23:15:33', 'kablon@gmail.com', '09090937257'),
+(3, 'Marie', 'Tan', 'superadmin2', '2a43bf7ab34cd6bf5401343115eaf325', 'uploads/avatars/3.png?v=1726475208', NULL, 2, '2024-09-16 16:26:29', '2024-10-13 23:15:44', NULL, NULL),
 (62, 'Staff', 'Staff', 'staff', '1253208465b1efa876f982d8a9e73eef', 'uploads/avatars/62.png?v=1728305143', NULL, 3, '2024-10-07 19:29:34', '2024-10-07 20:49:05', 'arzeljrz17@gmail.com', '09154138624'),
-(63, 'staff1', 'staff2', 'staff2', '202cb962ac59075b964b07152d234b70', NULL, NULL, 3, '2024-10-10 21:50:58', NULL, 'staff@gmail.com', '12');
+(63, 'staff2', 'staff2', 'staff2', '202cb962ac59075b964b07152d234b70', NULL, NULL, 3, '2024-10-10 21:50:58', '2024-10-13 20:27:21', 'staff@gmail.com', '12');
 
 --
 -- Indexes for dumped tables
@@ -468,19 +453,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `clients`
@@ -492,7 +477,7 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -516,7 +501,7 @@ ALTER TABLE `order_list`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `replies`
